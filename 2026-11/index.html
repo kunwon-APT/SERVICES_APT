@@ -167,6 +167,7 @@
       document.getElementById('doneBox').classList.add('show');
       post({ type: 'edu-complete' });
     }
+    reportHeight();
   }
 
   function reveal(key) {
@@ -188,6 +189,7 @@
     var left = FLAG_ORDER.filter(function (k) { return !found[k]; });
     var names = { sender: '보낸사람 주소', subject: '제목', brand: '상단 큰 글씨', personal: '본문 속 내 메일 주소', threat: '계정 폐쇄 문장', link: '파란 버튼' };
     document.getElementById('hintText').textContent = left.length ? '남은 곳: ' + left.map(function (k) { return names[k]; }).join(', ') : '모두 찾았습니다!';
+    reportHeight();
   });
 
   var quizEl = document.getElementById('quiz');
@@ -223,6 +225,14 @@
   });
 
   report();
+
+  // 부모가 iframe 높이를 내용에 맞출 수 있도록 높이를 알려준다
+  function reportHeight() {
+    post({ type: 'edu-resize', height: document.documentElement.scrollHeight });
+  }
+  window.addEventListener('load', reportHeight);
+  if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
+  else setInterval(reportHeight, 1000);
 </script>
 </body>
 </html>
