@@ -4,91 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2025년 8차 모의훈련 · 가상자산 거래소 사칭</title>
+<link rel="stylesheet" href="../common/v1/edu-kit.css">
 <style>
-  :root {
-    --bg: #f4f6f9; --card: #fff; --ink: #1b2d3d; --sub: #5c6872; --line: #e3e8ee;
-    --brand: #216da8; --warn: #d9480f; --warn-bg: #fff4e6; --ok: #2b8a3e; --ok-bg: #ebfbee;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 15px; line-height: 1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
-  h2 { font-size: 18px; margin: 28px 0 8px; }
-  .lead { color: var(--sub); margin: 0 0 14px; }
-  .counter { display: inline-block; background: var(--brand); color: #fff; border-radius: 999px;
-    padding: 2px 12px; font-size: 13px; margin-left: 6px; vertical-align: middle; }
-
-  /* 메일 재현 */
-  .mail { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05); }
-  .mail-head { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .mail-head .row { display: flex; gap: 8px; padding: 3px 0; }
-  .mail-head .k { width: 64px; color: var(--sub); flex-shrink: 0; }
-  .mail-head .v { min-width: 0; word-break: break-all; }
-  .mail-banner { padding: 16px 22px; font-weight: bold; }
-  .mail-banner small { display: block; font-weight: normal; font-size: 12px; opacity: .8; }
-  .mail-body { padding: 24px 22px; }
-  .mail-body p { margin: 0 0 12px; }
-  .box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
-  .box h4 { margin: 0 0 8px; font-size: 15px; }
-  .box ul { margin: 0; padding-left: 20px; }
-  .box.warn { background: #fff3e0; border-left: 4px solid #ff9800; }
-  .box.info { background: #e3f2fd; border: 1px solid #90caf9; }
-  .box.gray { background: #f5f5f5; }
-  .box.green { background: #e8f5e9; border: 2px solid #4caf50; text-align: center; }
-  .red { color: #d32f2f; font-weight: bold; }
-  .big { font-size: 26px; font-weight: bold; }
-  .lurelink { color: #1a5fb4; text-decoration: underline; }
-  .field { margin-top: 10px; }
-  .field label { display: block; font-size: 13px; color: var(--sub); }
-  .fakeinput { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 9px 10px; color: #999; background: #fff; }
-  .sig { font-size: 13px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; }
-  .fakebtn { display: block; margin-top: 22px; background: var(--brand); color: #fff; text-align: center;
+.mail-head .v { min-width: 0; word-break: break-all; }
+.mail-banner { padding: 16px 22px; font-weight: bold; }
+.mail-banner small { display: block; font-weight: normal; font-size: 12px; opacity: .8; }
+.mail-body { padding: 24px 22px; }
+.mail-body p { margin: 0 0 12px; }
+.box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
+.box h4 { margin: 0 0 8px; font-size: 15px; }
+.box ul { margin: 0; padding-left: 20px; }
+.box.warn { background: #fff3e0; border-left: 4px solid #ff9800; }
+.box.info { background: #e3f2fd; border: 1px solid #90caf9; }
+.box.gray { background: #f5f5f5; }
+.box.green { background: #e8f5e9; border: 2px solid #4caf50; text-align: center; }
+.red { color: #d32f2f; font-weight: bold; }
+.big { font-size: 26px; font-weight: bold; }
+.lurelink { color: #1a5fb4; text-decoration: underline; }
+.field { margin-top: 10px; }
+.field label { display: block; font-size: 13px; color: var(--sub); }
+.fakeinput { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 9px 10px; color: #999; background: #fff; }
+.sig { font-size: 13px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; }
+.fakebtn { display: block; margin-top: 22px; background: var(--brand); color: #fff; text-align: center;
     padding: 14px; border-radius: 8px; font-weight: bold; }
-  .mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
-
-  .flag { cursor: pointer; border-radius: 4px; outline: 2px dashed transparent; outline-offset: 2px;
-    transition: outline-color .15s, background .15s; }
-  .flag:hover { outline-color: #f59f00; }
-  .flag.found { outline: 2px solid var(--warn); background: rgba(253, 126, 20, .12); }
-  .fakebtn.flag.found { background: #a33a0a; }
-  .badge { display: none; background: var(--warn); color: #fff; font-size: 11px; font-weight: bold;
-    border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: middle; }
-  .flag.found .badge { display: inline-block; }
-
-  .hint { font-size: 13px; color: var(--sub); margin-top: 10px; }
-  .hint button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: #fff;
-    border-radius: 6px; padding: 3px 10px; cursor: pointer; }
-
-  /* 해설 */
-  .explain { margin-top: 14px; display: grid; gap: 10px; }
-  .ex { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 12px 14px;
-    animation: pop .25s ease; }
-  .ex b { color: var(--warn); }
-  .ex code { background: #fff; border: 1px solid #ffd8a8; border-radius: 4px; padding: 0 5px; font-size: 13px;
-    word-break: break-all; }
-  @keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-  /* 수칙 */
-  .rules { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px; }
-  .rules li { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .rules li:last-child { border-bottom: 0; }
-  .rules ol { margin: 0; padding-left: 20px; }
-
-  /* 퀴즈 */
-  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
-  .q .qt { font-weight: bold; margin-bottom: 10px; }
-  .q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
+.mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
+.fakebtn.flag.found { background: #a33a0a; }
+.q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
     border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 6px; cursor: pointer; }
-  .q button.opt:hover:not(:disabled) { border-color: var(--brand); }
-  .q button.opt.right { background: var(--ok-bg); border-color: var(--ok); }
-  .q button.opt.wrong { background: #fff5f5; border-color: #e03131; }
-  .q .fb { display: none; margin-top: 10px; font-size: 14px; color: var(--sub); }
-  .q.answered .fb { display: block; }
-
-  .done { display: none; margin-top: 20px; background: var(--ok-bg); border: 1px solid #b2f2bb; color: var(--ok);
-    border-radius: 12px; padding: 14px 18px; font-weight: bold; text-align: center; }
-  .done.show { display: block; }
 </style>
 </head>
 <body>
@@ -141,135 +83,66 @@
 </div>
 
 <script>
-  // warning.jsp(부모)와의 계약: edu-progress {done,total}, edu-complete. 개인정보는 주고받지 않는다.
-  var PARENT_TARGET_ORIGIN = '*';
-
-  var FLAGS = {
+window.EDU_ROUND = {
+  "flags": {
     "sender": "<b>거래소와 무관한 발신 주소</b> — 거래소 이름을 붙였지만 공식 도메인이 아닌, 그럴듯하게 지어낸 외부 주소입니다.",
     "brand": "<b>가입한 적 없는 서비스</b> — 회사 메일 주소로 해외 가상자산 거래소 안내가 왔습니다. 업무 메일로 가입한 적이 없다면 그 자체로 무차별 발송된 피싱입니다. 줄마다 붙은 \"#\" 기호와 어색한 문장도 공식 안내답지 않습니다.",
     "expire": "<b>있을 수 없는 \"자산 소멸\"</b> — 거래소에 보관된 가상자산은 포인트처럼 기한이 지나 사라지지 않습니다. \"내 돈이 없어진다\"는 불안을 이용한 거짓말입니다.",
     "press": "<b>이미 여러 번 알렸다는 압박</b> — \"3회 이상 안내했다\", \"즉시 취소 요청\"이라며 마치 내가 놓친 것처럼 느끼게 하고 상담원에게 서둘러 연락하게 만듭니다.",
     "amount": "<b>앞뒤 안 맞는 숫자</b> — 38.4 ETH를 462만 원으로 환산했지만 실제 시세로는 억 단위가 넘습니다. \"E.t.h\"처럼 이상한 표기도 스팸 필터를 피하려는 흔한 수법입니다.",
     "link": "<b>목적지를 숨긴 단축 주소</b> — <code>alie.kr/…</code> 같은 단축 URL은 눌러 보기 전까지 실제로 어디로 가는지 알 수 없습니다. \"상담직원\"과 연결해 메신저 대화로 끌어들인 뒤 송금, 원격제어 앱 설치, 인증번호 입력을 요구하는 것이 이런 사기의 전형입니다."
+  },
+  "order": [
+    "sender",
+    "brand",
+    "expire",
+    "press",
+    "amount",
+    "link"
+  ],
+  "quiz": [
+    {
+      "q": "가입한 적 없는 가상자산 거래소에서 \"보유 자산이 곧 소멸된다\"는 메일이 왔습니다. 어떻게 할까요?",
+      "opts": [
+        "혹시 모르니 상담원에게 연락해 본다",
+        "링크로 들어가 내 계정이 있는지 확인한다",
+        "열어 보지 말고 전산 담당자에게 신고한다"
+      ],
+      "answer": 2,
+      "fb": "가입한 적 없는 서비스의 안내는 무차별 발송된 피싱입니다. 확인하려고 접속하는 것 자체가 위험합니다."
+    },
+    {
+      "q": "메일에 alie.kr/… 같은 짧은 주소가 적혀 있습니다. 이런 단축 주소가 위험한 이유는?",
+      "opts": [
+        "실제로 연결되는 목적지가 숨겨져 있어서",
+        "주소가 짧아서 오타가 나기 쉬워서",
+        "국내 사이트라서"
+      ],
+      "answer": 0,
+      "fb": "단축 주소는 진짜 목적지를 가려 줍니다. 공식 기관·회사 안내는 보통 단축 주소를 쓰지 않습니다."
+    },
+    {
+      "q": "메일 속 \"상담직원\"과 연결되었더니 원격제어 앱 설치와 인증번호를 요구합니다. 올바른 대응은?",
+      "opts": [
+        "상담원이니 안내대로 따른다",
+        "즉시 대화를 끊고 신고한다",
+        "인증번호만 알려 주고 앱은 설치하지 않는다"
+      ],
+      "answer": 1,
+      "fb": "정상적인 금융·거래소 상담은 원격제어 앱 설치나 인증번호를 요구하지 않습니다. 하나라도 알려 주면 피해로 이어집니다."
+    }
+  ],
+  "hints": {
+    "sender": "보낸사람 주소",
+    "brand": "첫 인사 문장",
+    "expire": "소멸 예정일 안내",
+    "press": "3회 이상 안내 문장",
+    "amount": "수량·가격",
+    "link": "상담 연결 주소"
+  }
 };
-  var FLAG_ORDER = ["sender","brand","expire","press","amount","link"];
-  var HINT_NAMES = {"sender":"보낸사람 주소","brand":"첫 인사 문장","expire":"소멸 예정일 안내","press":"3회 이상 안내 문장","amount":"수량·가격","link":"상담 연결 주소"};
-
-  var QUIZ = [
-    {
-        "q": "가입한 적 없는 가상자산 거래소에서 \"보유 자산이 곧 소멸된다\"는 메일이 왔습니다. 어떻게 할까요?",
-        "opts": [
-            "혹시 모르니 상담원에게 연락해 본다",
-            "링크로 들어가 내 계정이 있는지 확인한다",
-            "열어 보지 말고 전산 담당자에게 신고한다"
-        ],
-        "answer": 2,
-        "fb": "가입한 적 없는 서비스의 안내는 무차별 발송된 피싱입니다. 확인하려고 접속하는 것 자체가 위험합니다."
-    },
-    {
-        "q": "메일에 alie.kr/… 같은 짧은 주소가 적혀 있습니다. 이런 단축 주소가 위험한 이유는?",
-        "opts": [
-            "실제로 연결되는 목적지가 숨겨져 있어서",
-            "주소가 짧아서 오타가 나기 쉬워서",
-            "국내 사이트라서"
-        ],
-        "answer": 0,
-        "fb": "단축 주소는 진짜 목적지를 가려 줍니다. 공식 기관·회사 안내는 보통 단축 주소를 쓰지 않습니다."
-    },
-    {
-        "q": "메일 속 \"상담직원\"과 연결되었더니 원격제어 앱 설치와 인증번호를 요구합니다. 올바른 대응은?",
-        "opts": [
-            "상담원이니 안내대로 따른다",
-            "즉시 대화를 끊고 신고한다",
-            "인증번호만 알려 주고 앱은 설치하지 않는다"
-        ],
-        "answer": 1,
-        "fb": "정상적인 금융·거래소 상담은 원격제어 앱 설치나 인증번호를 요구하지 않습니다. 하나라도 알려 주면 피해로 이어집니다."
-    }
-];
-
-  var found = {};
-  var quizDone = 0;
-  var TOTAL = FLAG_ORDER.length + QUIZ.length;
-
-  function post(data) {
-    try { if (window.parent && window.parent !== window) window.parent.postMessage(data, PARENT_TARGET_ORIGIN); } catch (e) {}
-  }
-  function report() {
-    var done = Object.keys(found).length + quizDone;
-    document.getElementById('flagCounter').textContent = Object.keys(found).length + ' / ' + FLAG_ORDER.length;
-    document.getElementById('quizCounter').textContent = quizDone + ' / ' + QUIZ.length;
-    post({ type: 'edu-progress', done: done, total: TOTAL });
-    if (done >= TOTAL) {
-      document.getElementById('doneBox').classList.add('show');
-      post({ type: 'edu-complete' });
-    }
-    reportHeight();
-  }
-
-  function reveal(key) {
-    if (found[key]) return;
-    found[key] = true;
-    document.querySelectorAll('[data-flag="' + key + '"]').forEach(function (el) { el.classList.add('found'); });
-    var div = document.createElement('div');
-    div.className = 'ex';
-    div.innerHTML = (FLAG_ORDER.indexOf(key) + 1) + '. ' + FLAGS[key];
-    document.getElementById('explain').appendChild(div);
-    report();
-  }
-
-  document.querySelectorAll('.flag').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.stopPropagation(); reveal(el.getAttribute('data-flag')); });
-  });
-
-  document.getElementById('hintBtn').addEventListener('click', function () {
-    var left = FLAG_ORDER.filter(function (k) { return !found[k]; });
-    document.getElementById('hintText').textContent = left.length ? '남은 곳: ' + left.map(function (k) { return HINT_NAMES[k]; }).join(', ') : '모두 찾았습니다!';
-    reportHeight();
-  });
-
-  var quizEl = document.getElementById('quiz');
-  QUIZ.forEach(function (item, qi) {
-    var box = document.createElement('div');
-    box.className = 'q';
-    var qt = document.createElement('div');
-    qt.className = 'qt';
-    qt.textContent = 'Q' + (qi + 1) + '. ' + item.q;
-    box.appendChild(qt);
-    var btns = item.opts.map(function (txt, oi) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'opt'; b.textContent = txt;
-      b.addEventListener('click', function () {
-        if (box.classList.contains('answered')) return;
-        if (oi === item.answer) {
-          btns.forEach(function (x) { x.disabled = true; });
-          b.classList.add('right');
-          box.classList.add('answered');
-          quizDone++;
-          report();
-        } else {
-          b.classList.add('wrong'); b.disabled = true;
-          reportHeight();
-        }
-      });
-      box.appendChild(b);
-      return b;
-    });
-    var fb = document.createElement('div');
-    fb.className = 'fb'; fb.textContent = item.fb;
-    box.appendChild(fb);
-    quizEl.appendChild(box);
-  });
-
-  report();
-
-  // 부모가 iframe 높이를 내용에 맞출 수 있도록 높이를 알려준다
-  function reportHeight() {
-    post({ type: 'edu-resize', height: document.documentElement.scrollHeight });
-  }
-  window.addEventListener('load', reportHeight);
-  if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
-  else setInterval(reportHeight, 1000);
 </script>
+<script src="../common/v1/edu-bridge.js"></script>
+<script src="../common/v1/edu-kit.js"></script>
 </body>
 </html>

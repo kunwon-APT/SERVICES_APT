@@ -4,86 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2026년 4차 악성메일 모의훈련 · 메일 발송 실패 알림 사칭</title>
+<link rel="stylesheet" href="../common/v1/edu-kit.css">
 <style>
-  :root {
-    --bg: #f4f6f9; --card: #fff; --ink: #1b2d3d; --sub: #5c6872; --line: #e3e8ee;
-    --brand: #216da8; --warn: #d9480f; --warn-bg: #fff4e6; --ok: #2b8a3e; --ok-bg: #ebfbee;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 15px; line-height: 1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
-  h1 { font-size: 20px; margin: 4px 0 4px; }
-  h2 { font-size: 18px; margin: 28px 0 8px; }
-  .lead { color: var(--sub); margin: 0 0 14px; }
-  .counter { display: inline-block; background: var(--brand); color: #fff; border-radius: 999px;
-    padding: 2px 12px; font-size: 13px; margin-left: 6px; vertical-align: middle; }
-
-  /* 메일 재현 */
-  .mail { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05); }
-  .mail-head { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .mail-head .row { display: flex; gap: 8px; padding: 3px 0; }
-  .mail-head .k { width: 64px; color: var(--sub); flex-shrink: 0; }
-  .mail-head .row > span:last-child { min-width: 0; word-break: break-all; }
-  .mail-body { padding: 22px 20px; word-break: keep-all; overflow-wrap: anywhere; }
-  .mail-body p { margin: 0 0 12px; }
-  .band { padding: 18px 20px; color: #fff; }
-  .band .big { font-size: 20px; font-weight: bold; }
-  .band .small { font-size: 12px; opacity: .9; margin-top: 4px; }
-  .box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 14px; }
-  .box .bt { font-weight: bold; margin-bottom: 6px; }
-  .box ul { margin: 0; padding-left: 18px; }
-  .mono { font-family: Consolas, "Courier New", monospace; font-size: 12.5px; }
-  .fakebtn { display: block; margin: 20px auto 6px; max-width: 360px; background: var(--brand); color: #fff; text-align: center;
+h1 { font-size: 20px; margin: 4px 0 4px; }
+.mail-head .row > span:last-child { min-width: 0; word-break: break-all; }
+.mail-body { padding: 22px 20px; word-break: keep-all; overflow-wrap: anywhere; }
+.mail-body p { margin: 0 0 12px; }
+.band { padding: 18px 20px; color: #fff; }
+.band .big { font-size: 20px; font-weight: bold; }
+.band .small { font-size: 12px; opacity: .9; margin-top: 4px; }
+.box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 14px; }
+.box .bt { font-weight: bold; margin-bottom: 6px; }
+.box ul { margin: 0; padding-left: 18px; }
+.mono { font-family: Consolas, "Courier New", monospace; font-size: 12.5px; }
+.fakebtn { display: block; margin: 20px auto 6px; max-width: 360px; background: var(--brand); color: #fff; text-align: center;
     padding: 14px; border-radius: 8px; font-weight: bold; }
-  .fakelink { color: #0000ee; text-decoration: underline; }
-  .mail-foot { padding: 16px 20px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
-  .r03 .band { background: #dc3545; }
-  .r03 .fakebtn { background: #dc3545; }
-  .r03 .fakebtn.flag.found { background: #8a1c27; }
-  .flag { cursor: pointer; border-radius: 4px; outline: 2px dashed transparent; outline-offset: 2px;
-    transition: outline-color .15s, background .15s; }
-  .flag:hover { outline-color: #f59f00; }
-  .flag.found { outline: 2px solid var(--warn); background: rgba(253, 126, 20, .12); }
-  .fakebtn.flag.found { background: #a33a0a; }
-  .badge { display: none; background: var(--warn); color: #fff; font-size: 11px; font-weight: bold;
-    border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: middle; }
-  .flag.found .badge { display: inline-block; }
-
-  .hint { font-size: 13px; color: var(--sub); margin-top: 10px; }
-  .hint button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: #fff;
-    border-radius: 6px; padding: 3px 10px; cursor: pointer; }
-
-  /* 해설 */
-  .explain { margin-top: 14px; display: grid; gap: 10px; }
-  .ex { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 12px 14px;
-    animation: pop .25s ease; }
-  .ex b { color: var(--warn); }
-  .ex code { background: #fff; border: 1px solid #ffd8a8; border-radius: 4px; padding: 0 5px; font-size: 13px;
-    word-break: break-all; }
-  @keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-  /* 수칙 */
-  .rules { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px; }
-  .rules li { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .rules li:last-child { border-bottom: 0; }
-  .rules ol { margin: 0; padding-left: 20px; }
-
-  /* 퀴즈 */
-  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
-  .q .qt { font-weight: bold; margin-bottom: 10px; }
-  .q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff; color: inherit;
+.fakelink { color: #0000ee; text-decoration: underline; }
+.mail-foot { padding: 16px 20px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
+.r03 .band { background: #dc3545; }
+.r03 .fakebtn { background: #dc3545; }
+.r03 .fakebtn.flag.found { background: #8a1c27; }
+.fakebtn.flag.found { background: #a33a0a; }
+.q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff; color: inherit;
     border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 6px; cursor: pointer; }
-  .q button.opt:hover:not(:disabled) { border-color: var(--brand); }
-  .q button.opt.right { background: var(--ok-bg); border-color: var(--ok); }
-  .q button.opt.wrong { background: #fff5f5; border-color: #e03131; }
-  .q .fb { display: none; margin-top: 10px; font-size: 14px; color: var(--sub); }
-  .q.answered .fb { display: block; }
-
-  .done { display: none; margin-top: 20px; background: var(--ok-bg); border: 1px solid #b2f2bb; color: var(--ok);
-    border-radius: 12px; padding: 14px 18px; font-weight: bold; text-align: center; }
-  .done.show { display: block; }
 </style>
 </head>
 <body>
@@ -138,20 +81,22 @@
 </div>
 
 <script>
-  // warning.jsp(부모)와의 계약: edu-progress {done,total}, edu-complete. 개인정보는 주고받지 않는다.
-  var PARENT_TARGET_ORIGIN = '*';
-
-  var FLAGS = {
+window.EDU_ROUND = {
+  "flags": {
     "sender": "<b>위조하기 쉬운 시스템 발신자</b> — \"Mail Delivery System\", <code>mailer-daemon</code>처럼 자동 시스템 이름을 쓰면 사람들은 의심 없이 믿습니다. 하지만 보낸사람 주소는 회사 도메인이라도 얼마든지 위조할 수 있습니다.",
     "vague": "<b>무엇이 실패했는지 없음</b> — 진짜 반송 메일에는 내가 언제, 누구에게 보낸 어떤 메일(제목)이 실패했는지가 들어 있습니다. 이 메일은 \"수신자에게 전달되지 못했다\"고만 할 뿐 대상이 없습니다. 내가 최근 보낸 메일이 있는지 보낸메일함에서 직접 확인하면 바로 드러납니다.",
     "link": "<b>반송 메일에 있는 버튼</b> — 메일 시스템은 실패한 메일을 \"처리\"하라고 버튼을 주지 않습니다. 실패했으면 내가 다시 보내면 될 뿐입니다. 이 버튼은 사내 시스템처럼 꾸민 가짜 주소로 연결되어 로그인 정보를 입력하게 만듭니다.",
     "log": "<b>어려운 기술 로그로 포장</b> — SMTP 오류 코드, 서버 이름 등 일반인이 이해하기 어려운 내용을 넣어 진짜 시스템 메일처럼 보이게 했습니다. 정작 중요한 <code>Final-Recipient</code>(받는 사람) 칸은 비어 있습니다.",
     "contact": "<b>메일 속 문의처와 역설적 안내</b> — \"본인이 보낸 메일이 아니면 신고하라\", \"회신하지 말라\"는 문구로 오히려 공식 메일처럼 보이게 합니다. 의심스러울 때는 메일에 적힌 연락처가 아니라 평소 알고 있는 전산 담당자 연락처로 문의해야 합니다."
-  };
-  var FLAG_ORDER = ["sender","vague","link","log","contact"];
-  var FLAG_NAMES = {"sender":"보낸사람","vague":"본문 첫 문장","link":"빨간 버튼","log":"시스템 오류 로그","contact":"기술 지원 안내"};
-
-  var QUIZ = [
+  },
+  "order": [
+    "sender",
+    "vague",
+    "link",
+    "log",
+    "contact"
+  ],
+  "quiz": [
     {
       "q": "\"메일 발송 실패\" 알림이 왔는데 어떤 메일이 실패했는지 나와 있지 않습니다. 어떻게 확인할까요?",
       "opts": [
@@ -182,90 +127,17 @@
       "answer": 1,
       "fb": "메일 링크로 열린 로그인 화면에는 입력하지 마세요. 실수했더라도 빨리 알리면 피해를 막을 수 있습니다."
     }
-  ];
-
-  var found = {};
-  var quizDone = 0;
-  var TOTAL = FLAG_ORDER.length + QUIZ.length;
-
-  function post(data) {
-    try { if (window.parent && window.parent !== window) window.parent.postMessage(data, PARENT_TARGET_ORIGIN); } catch (e) {}
+  ],
+  "hints": {
+    "sender": "보낸사람",
+    "vague": "본문 첫 문장",
+    "link": "빨간 버튼",
+    "log": "시스템 오류 로그",
+    "contact": "기술 지원 안내"
   }
-  function report() {
-    var done = Object.keys(found).length + quizDone;
-    document.getElementById('flagCounter').textContent = Object.keys(found).length + ' / ' + FLAG_ORDER.length;
-    document.getElementById('quizCounter').textContent = quizDone + ' / ' + QUIZ.length;
-    post({ type: 'edu-progress', done: done, total: TOTAL });
-    if (done >= TOTAL) {
-      document.getElementById('doneBox').classList.add('show');
-      post({ type: 'edu-complete' });
-    }
-    reportHeight();
-  }
-
-  function reveal(key) {
-    if (found[key]) return;
-    found[key] = true;
-    document.querySelectorAll('[data-flag="' + key + '"]').forEach(function (el) { el.classList.add('found'); });
-    var div = document.createElement('div');
-    div.className = 'ex';
-    div.innerHTML = (FLAG_ORDER.indexOf(key) + 1) + '. ' + FLAGS[key];
-    document.getElementById('explain').appendChild(div);
-    report();
-  }
-
-  document.querySelectorAll('.flag').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.stopPropagation(); reveal(el.getAttribute('data-flag')); });
-  });
-
-  document.getElementById('hintBtn').addEventListener('click', function () {
-    var left = FLAG_ORDER.filter(function (k) { return !found[k]; });
-    document.getElementById('hintText').textContent = left.length ? '남은 곳: ' + left.map(function (k) { return FLAG_NAMES[k]; }).join(', ') : '모두 찾았습니다!';
-    reportHeight();
-  });
-
-  var quizEl = document.getElementById('quiz');
-  QUIZ.forEach(function (item, qi) {
-    var box = document.createElement('div');
-    box.className = 'q';
-    var qt = document.createElement('div');
-    qt.className = 'qt';
-    qt.textContent = 'Q' + (qi + 1) + '. ' + item.q;
-    box.appendChild(qt);
-    var btns = item.opts.map(function (txt, oi) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'opt'; b.textContent = txt;
-      b.addEventListener('click', function () {
-        if (box.classList.contains('answered')) return;
-        if (oi === item.answer) {
-          btns.forEach(function (x) { x.disabled = true; });
-          b.classList.add('right');
-          box.classList.add('answered');
-          quizDone++;
-          report();
-        } else {
-          b.classList.add('wrong'); b.disabled = true;
-          reportHeight();
-        }
-      });
-      box.appendChild(b);
-      return b;
-    });
-    var fb = document.createElement('div');
-    fb.className = 'fb'; fb.textContent = item.fb;
-    box.appendChild(fb);
-    quizEl.appendChild(box);
-  });
-
-  report();
-
-  // 부모가 iframe 높이를 내용에 맞출 수 있도록 높이를 알려준다
-  function reportHeight() {
-    post({ type: 'edu-resize', height: document.documentElement.scrollHeight });
-  }
-  window.addEventListener('load', reportHeight);
-  if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
-  else setInterval(reportHeight, 1000);
+};
 </script>
+<script src="../common/v1/edu-bridge.js"></script>
+<script src="../common/v1/edu-kit.js"></script>
 </body>
 </html>

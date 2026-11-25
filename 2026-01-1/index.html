@@ -4,91 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2026년 1차 모의훈련 · 국세청 환급 사칭</title>
+<link rel="stylesheet" href="../common/v1/edu-kit.css">
 <style>
-  :root {
-    --bg: #f4f6f9; --card: #fff; --ink: #1b2d3d; --sub: #5c6872; --line: #e3e8ee;
-    --brand: #216da8; --warn: #d9480f; --warn-bg: #fff4e6; --ok: #2b8a3e; --ok-bg: #ebfbee;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 15px; line-height: 1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
-  h2 { font-size: 18px; margin: 28px 0 8px; }
-  .lead { color: var(--sub); margin: 0 0 14px; }
-  .counter { display: inline-block; background: var(--brand); color: #fff; border-radius: 999px;
-    padding: 2px 12px; font-size: 13px; margin-left: 6px; vertical-align: middle; }
-
-  /* 메일 재현 */
-  .mail { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05); }
-  .mail-head { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .mail-head .row { display: flex; gap: 8px; padding: 3px 0; }
-  .mail-head .k { width: 64px; color: var(--sub); flex-shrink: 0; }
-  .mail-head .v { min-width: 0; word-break: break-all; }
-  .mail-banner { padding: 16px 22px; font-weight: bold; }
-  .mail-banner small { display: block; font-weight: normal; font-size: 12px; opacity: .8; }
-  .mail-body { padding: 24px 22px; }
-  .mail-body p { margin: 0 0 12px; }
-  .box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
-  .box h4 { margin: 0 0 8px; font-size: 15px; }
-  .box ul { margin: 0; padding-left: 20px; }
-  .box.warn { background: #fff3e0; border-left: 4px solid #ff9800; }
-  .box.info { background: #e3f2fd; border: 1px solid #90caf9; }
-  .box.gray { background: #f5f5f5; }
-  .box.green { background: #e8f5e9; border: 2px solid #4caf50; text-align: center; }
-  .red { color: #d32f2f; font-weight: bold; }
-  .big { font-size: 26px; font-weight: bold; }
-  .lurelink { color: #1a5fb4; text-decoration: underline; }
-  .field { margin-top: 10px; }
-  .field label { display: block; font-size: 13px; color: var(--sub); }
-  .fakeinput { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 9px 10px; color: #999; background: #fff; }
-  .sig { font-size: 13px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; }
-  .fakebtn { display: block; margin-top: 22px; background: var(--brand); color: #fff; text-align: center;
+.mail-head .v { min-width: 0; word-break: break-all; }
+.mail-banner { padding: 16px 22px; font-weight: bold; }
+.mail-banner small { display: block; font-weight: normal; font-size: 12px; opacity: .8; }
+.mail-body { padding: 24px 22px; }
+.mail-body p { margin: 0 0 12px; }
+.box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
+.box h4 { margin: 0 0 8px; font-size: 15px; }
+.box ul { margin: 0; padding-left: 20px; }
+.box.warn { background: #fff3e0; border-left: 4px solid #ff9800; }
+.box.info { background: #e3f2fd; border: 1px solid #90caf9; }
+.box.gray { background: #f5f5f5; }
+.box.green { background: #e8f5e9; border: 2px solid #4caf50; text-align: center; }
+.red { color: #d32f2f; font-weight: bold; }
+.big { font-size: 26px; font-weight: bold; }
+.lurelink { color: #1a5fb4; text-decoration: underline; }
+.field { margin-top: 10px; }
+.field label { display: block; font-size: 13px; color: var(--sub); }
+.fakeinput { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 9px 10px; color: #999; background: #fff; }
+.sig { font-size: 13px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; }
+.fakebtn { display: block; margin-top: 22px; background: var(--brand); color: #fff; text-align: center;
     padding: 14px; border-radius: 8px; font-weight: bold; }
-  .mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
-
-  .flag { cursor: pointer; border-radius: 4px; outline: 2px dashed transparent; outline-offset: 2px;
-    transition: outline-color .15s, background .15s; }
-  .flag:hover { outline-color: #f59f00; }
-  .flag.found { outline: 2px solid var(--warn); background: rgba(253, 126, 20, .12); }
-  .fakebtn.flag.found { background: #a33a0a; }
-  .badge { display: none; background: var(--warn); color: #fff; font-size: 11px; font-weight: bold;
-    border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: middle; }
-  .flag.found .badge { display: inline-block; }
-
-  .hint { font-size: 13px; color: var(--sub); margin-top: 10px; }
-  .hint button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: #fff;
-    border-radius: 6px; padding: 3px 10px; cursor: pointer; }
-
-  /* 해설 */
-  .explain { margin-top: 14px; display: grid; gap: 10px; }
-  .ex { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 12px 14px;
-    animation: pop .25s ease; }
-  .ex b { color: var(--warn); }
-  .ex code { background: #fff; border: 1px solid #ffd8a8; border-radius: 4px; padding: 0 5px; font-size: 13px;
-    word-break: break-all; }
-  @keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-  /* 수칙 */
-  .rules { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px; }
-  .rules li { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .rules li:last-child { border-bottom: 0; }
-  .rules ol { margin: 0; padding-left: 20px; }
-
-  /* 퀴즈 */
-  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
-  .q .qt { font-weight: bold; margin-bottom: 10px; }
-  .q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
+.mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
+.fakebtn.flag.found { background: #a33a0a; }
+.q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
     border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 6px; cursor: pointer; }
-  .q button.opt:hover:not(:disabled) { border-color: var(--brand); }
-  .q button.opt.right { background: var(--ok-bg); border-color: var(--ok); }
-  .q button.opt.wrong { background: #fff5f5; border-color: #e03131; }
-  .q .fb { display: none; margin-top: 10px; font-size: 14px; color: var(--sub); }
-  .q.answered .fb { display: block; }
-
-  .done { display: none; margin-top: 20px; background: var(--ok-bg); border: 1px solid #b2f2bb; color: var(--ok);
-    border-radius: 12px; padding: 14px 18px; font-weight: bold; text-align: center; }
-  .done.show { display: block; }
 </style>
 </head>
 <body>
@@ -148,135 +90,66 @@
 </div>
 
 <script>
-  // warning.jsp(부모)와의 계약: edu-progress {done,total}, edu-complete. 개인정보는 주고받지 않는다.
-  var PARENT_TARGET_ORIGIN = '*';
-
-  var FLAGS = {
+window.EDU_ROUND = {
+  "flags": {
     "sender": "<b>정부 도메인이 아닌 발신 주소</b> — 국세청 등 정부기관은 <code>go.kr</code> 도메인을 씁니다. \"hometax\"를 넣었어도 다른 도메인이면 가짜입니다.",
     "money": "<b>\"AI 분석\"과 구체적인 환급액 미끼</b> — \"AI 빅데이터 분석\", \"최대 1,523,400원\"처럼 그럴듯한 말과 정확한 숫자로 믿음을 얻으려 합니다. 받을 돈이 있다는 기대가 경계심을 낮춥니다.",
     "deadline": "<b>앞뒤가 맞지 않는 날짜</b> — 마감은 1월 15일인데 \"남은 시간 358일\"이라고 하고, 맨 아래 작성일은 \"2025년 1월 6일\"입니다. 서둘러 만든 가짜 메일에서 흔히 보이는 허점입니다.",
     "steps": "<b>휴대폰 인증과 환급계좌 등록 요구</b> — 링크 한 번으로 본인인증과 계좌 등록까지 받아 냅니다. 이 과정에서 입력한 인증정보와 계좌정보가 금융사기에 쓰입니다.",
     "link": "<b>홈택스가 아닌 링크 주소</b> — 버튼의 실제 연결 주소는 <code>https://hometax-refund-apply.kr/tax-credit</code>입니다. 진짜 홈택스 주소가 아니며, 국세청은 메일·문자 링크로 환급 신청을 받지 않습니다.",
     "reassure": "<b>안심시키는 가짜 보안 문구</b> — \"SSL 보안인증\", \"국세청은 비밀번호를 요구하지 않습니다\" 같은 문구를 넣어 오히려 믿게 만듭니다. 보안 경고가 적혀 있다고 안전한 메일이 되는 것은 아닙니다."
+  },
+  "order": [
+    "sender",
+    "money",
+    "deadline",
+    "steps",
+    "link",
+    "reassure"
+  ],
+  "quiz": [
+    {
+      "q": "\"국세청\"에서 미신청 세액공제 환급 안내 메일이 왔습니다. 가장 안전한 확인 방법은?",
+      "opts": [
+        "메일의 \"지금 바로 신청하기\" 버튼을 누른다",
+        "홈택스 주소를 직접 입력해 접속하거나 회사 급여 담당자에게 확인한다",
+        "메일에 답장해 환급 여부를 묻는다"
+      ],
+      "answer": 1,
+      "fb": "국세청은 메일·문자 링크로 환급 신청을 받지 않습니다. 내가 아는 경로로만 확인하세요."
+    },
+    {
+      "q": "국세청 등 정부기관이 보낸 메일의 발신 도메인은 보통 어떻게 끝날까요?",
+      "opts": [
+        ".com",
+        ".kr (아무 .kr 주소)",
+        ".go.kr"
+      ],
+      "answer": 2,
+      "fb": "정부기관은 go.kr 도메인을 씁니다. hometax-refund.kr 처럼 이름만 비슷한 주소에 속지 마세요."
+    },
+    {
+      "q": "메일 아래에 \"국세청은 비밀번호를 요구하지 않습니다\"라는 보안 안내가 있습니다. 이 메일은 안전할까요?",
+      "opts": [
+        "아니다. 보안 문구는 믿게 만들려고 넣었을 수 있으니 주소와 요구 내용을 따져야 한다",
+        "그렇다. 보안 안내가 있으니 공식 메일이다",
+        "SSL 표시까지 있으니 안전하다"
+      ],
+      "answer": 0,
+      "fb": "공격자도 보안 문구와 자물쇠 표시를 얼마든지 붙일 수 있습니다. 발신 주소와 링크 주소, 요구하는 정보를 확인하세요."
+    }
+  ],
+  "hints": {
+    "sender": "보낸사람 주소",
+    "money": "AI 분석 문장",
+    "deadline": "파란 상자 속 마감 안내",
+    "steps": "신청 절차",
+    "link": "신청 버튼",
+    "reassure": "버튼 아래 보안 문구"
+  }
 };
-  var FLAG_ORDER = ["sender","money","deadline","steps","link","reassure"];
-  var HINT_NAMES = {"sender":"보낸사람 주소","money":"AI 분석 문장","deadline":"파란 상자 속 마감 안내","steps":"신청 절차","link":"신청 버튼","reassure":"버튼 아래 보안 문구"};
-
-  var QUIZ = [
-    {
-        "q": "\"국세청\"에서 미신청 세액공제 환급 안내 메일이 왔습니다. 가장 안전한 확인 방법은?",
-        "opts": [
-            "메일의 \"지금 바로 신청하기\" 버튼을 누른다",
-            "홈택스 주소를 직접 입력해 접속하거나 회사 급여 담당자에게 확인한다",
-            "메일에 답장해 환급 여부를 묻는다"
-        ],
-        "answer": 1,
-        "fb": "국세청은 메일·문자 링크로 환급 신청을 받지 않습니다. 내가 아는 경로로만 확인하세요."
-    },
-    {
-        "q": "국세청 등 정부기관이 보낸 메일의 발신 도메인은 보통 어떻게 끝날까요?",
-        "opts": [
-            ".com",
-            ".kr (아무 .kr 주소)",
-            ".go.kr"
-        ],
-        "answer": 2,
-        "fb": "정부기관은 go.kr 도메인을 씁니다. hometax-refund.kr 처럼 이름만 비슷한 주소에 속지 마세요."
-    },
-    {
-        "q": "메일 아래에 \"국세청은 비밀번호를 요구하지 않습니다\"라는 보안 안내가 있습니다. 이 메일은 안전할까요?",
-        "opts": [
-            "아니다. 보안 문구는 믿게 만들려고 넣었을 수 있으니 주소와 요구 내용을 따져야 한다",
-            "그렇다. 보안 안내가 있으니 공식 메일이다",
-            "SSL 표시까지 있으니 안전하다"
-        ],
-        "answer": 0,
-        "fb": "공격자도 보안 문구와 자물쇠 표시를 얼마든지 붙일 수 있습니다. 발신 주소와 링크 주소, 요구하는 정보를 확인하세요."
-    }
-];
-
-  var found = {};
-  var quizDone = 0;
-  var TOTAL = FLAG_ORDER.length + QUIZ.length;
-
-  function post(data) {
-    try { if (window.parent && window.parent !== window) window.parent.postMessage(data, PARENT_TARGET_ORIGIN); } catch (e) {}
-  }
-  function report() {
-    var done = Object.keys(found).length + quizDone;
-    document.getElementById('flagCounter').textContent = Object.keys(found).length + ' / ' + FLAG_ORDER.length;
-    document.getElementById('quizCounter').textContent = quizDone + ' / ' + QUIZ.length;
-    post({ type: 'edu-progress', done: done, total: TOTAL });
-    if (done >= TOTAL) {
-      document.getElementById('doneBox').classList.add('show');
-      post({ type: 'edu-complete' });
-    }
-    reportHeight();
-  }
-
-  function reveal(key) {
-    if (found[key]) return;
-    found[key] = true;
-    document.querySelectorAll('[data-flag="' + key + '"]').forEach(function (el) { el.classList.add('found'); });
-    var div = document.createElement('div');
-    div.className = 'ex';
-    div.innerHTML = (FLAG_ORDER.indexOf(key) + 1) + '. ' + FLAGS[key];
-    document.getElementById('explain').appendChild(div);
-    report();
-  }
-
-  document.querySelectorAll('.flag').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.stopPropagation(); reveal(el.getAttribute('data-flag')); });
-  });
-
-  document.getElementById('hintBtn').addEventListener('click', function () {
-    var left = FLAG_ORDER.filter(function (k) { return !found[k]; });
-    document.getElementById('hintText').textContent = left.length ? '남은 곳: ' + left.map(function (k) { return HINT_NAMES[k]; }).join(', ') : '모두 찾았습니다!';
-    reportHeight();
-  });
-
-  var quizEl = document.getElementById('quiz');
-  QUIZ.forEach(function (item, qi) {
-    var box = document.createElement('div');
-    box.className = 'q';
-    var qt = document.createElement('div');
-    qt.className = 'qt';
-    qt.textContent = 'Q' + (qi + 1) + '. ' + item.q;
-    box.appendChild(qt);
-    var btns = item.opts.map(function (txt, oi) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'opt'; b.textContent = txt;
-      b.addEventListener('click', function () {
-        if (box.classList.contains('answered')) return;
-        if (oi === item.answer) {
-          btns.forEach(function (x) { x.disabled = true; });
-          b.classList.add('right');
-          box.classList.add('answered');
-          quizDone++;
-          report();
-        } else {
-          b.classList.add('wrong'); b.disabled = true;
-          reportHeight();
-        }
-      });
-      box.appendChild(b);
-      return b;
-    });
-    var fb = document.createElement('div');
-    fb.className = 'fb'; fb.textContent = item.fb;
-    box.appendChild(fb);
-    quizEl.appendChild(box);
-  });
-
-  report();
-
-  // 부모가 iframe 높이를 내용에 맞출 수 있도록 높이를 알려준다
-  function reportHeight() {
-    post({ type: 'edu-resize', height: document.documentElement.scrollHeight });
-  }
-  window.addEventListener('load', reportHeight);
-  if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
-  else setInterval(reportHeight, 1000);
 </script>
+<script src="../common/v1/edu-bridge.js"></script>
+<script src="../common/v1/edu-kit.js"></script>
 </body>
 </html>

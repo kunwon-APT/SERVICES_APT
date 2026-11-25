@@ -4,91 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2025년 6차 모의훈련 · 회의자료 열람 사칭</title>
+<link rel="stylesheet" href="../common/v1/edu-kit.css">
 <style>
-  :root {
-    --bg: #f4f6f9; --card: #fff; --ink: #1b2d3d; --sub: #5c6872; --line: #e3e8ee;
-    --brand: #216da8; --warn: #d9480f; --warn-bg: #fff4e6; --ok: #2b8a3e; --ok-bg: #ebfbee;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 15px; line-height: 1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
-  h2 { font-size: 18px; margin: 28px 0 8px; }
-  .lead { color: var(--sub); margin: 0 0 14px; }
-  .counter { display: inline-block; background: var(--brand); color: #fff; border-radius: 999px;
-    padding: 2px 12px; font-size: 13px; margin-left: 6px; vertical-align: middle; }
-
-  /* 메일 재현 */
-  .mail { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05); }
-  .mail-head { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .mail-head .row { display: flex; gap: 8px; padding: 3px 0; }
-  .mail-head .k { width: 64px; color: var(--sub); flex-shrink: 0; }
-  .mail-head .v { min-width: 0; word-break: break-all; }
-  .mail-banner { padding: 16px 22px; font-weight: bold; }
-  .mail-banner small { display: block; font-weight: normal; font-size: 12px; opacity: .8; }
-  .mail-body { padding: 24px 22px; }
-  .mail-body p { margin: 0 0 12px; }
-  .box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
-  .box h4 { margin: 0 0 8px; font-size: 15px; }
-  .box ul { margin: 0; padding-left: 20px; }
-  .box.warn { background: #fff3e0; border-left: 4px solid #ff9800; }
-  .box.info { background: #e3f2fd; border: 1px solid #90caf9; }
-  .box.gray { background: #f5f5f5; }
-  .box.green { background: #e8f5e9; border: 2px solid #4caf50; text-align: center; }
-  .red { color: #d32f2f; font-weight: bold; }
-  .big { font-size: 26px; font-weight: bold; }
-  .lurelink { color: #1a5fb4; text-decoration: underline; }
-  .field { margin-top: 10px; }
-  .field label { display: block; font-size: 13px; color: var(--sub); }
-  .fakeinput { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 9px 10px; color: #999; background: #fff; }
-  .sig { font-size: 13px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; }
-  .fakebtn { display: block; margin-top: 22px; background: var(--brand); color: #fff; text-align: center;
+.mail-head .v { min-width: 0; word-break: break-all; }
+.mail-banner { padding: 16px 22px; font-weight: bold; }
+.mail-banner small { display: block; font-weight: normal; font-size: 12px; opacity: .8; }
+.mail-body { padding: 24px 22px; }
+.mail-body p { margin: 0 0 12px; }
+.box { border-radius: 8px; padding: 14px 16px; margin: 14px 0; }
+.box h4 { margin: 0 0 8px; font-size: 15px; }
+.box ul { margin: 0; padding-left: 20px; }
+.box.warn { background: #fff3e0; border-left: 4px solid #ff9800; }
+.box.info { background: #e3f2fd; border: 1px solid #90caf9; }
+.box.gray { background: #f5f5f5; }
+.box.green { background: #e8f5e9; border: 2px solid #4caf50; text-align: center; }
+.red { color: #d32f2f; font-weight: bold; }
+.big { font-size: 26px; font-weight: bold; }
+.lurelink { color: #1a5fb4; text-decoration: underline; }
+.field { margin-top: 10px; }
+.field label { display: block; font-size: 13px; color: var(--sub); }
+.fakeinput { display: block; border: 1px solid #ccc; border-radius: 4px; padding: 9px 10px; color: #999; background: #fff; }
+.sig { font-size: 13px; color: var(--sub); border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; }
+.fakebtn { display: block; margin-top: 22px; background: var(--brand); color: #fff; text-align: center;
     padding: 14px; border-radius: 8px; font-weight: bold; }
-  .mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
-
-  .flag { cursor: pointer; border-radius: 4px; outline: 2px dashed transparent; outline-offset: 2px;
-    transition: outline-color .15s, background .15s; }
-  .flag:hover { outline-color: #f59f00; }
-  .flag.found { outline: 2px solid var(--warn); background: rgba(253, 126, 20, .12); }
-  .fakebtn.flag.found { background: #a33a0a; }
-  .badge { display: none; background: var(--warn); color: #fff; font-size: 11px; font-weight: bold;
-    border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: middle; }
-  .flag.found .badge { display: inline-block; }
-
-  .hint { font-size: 13px; color: var(--sub); margin-top: 10px; }
-  .hint button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: #fff;
-    border-radius: 6px; padding: 3px 10px; cursor: pointer; }
-
-  /* 해설 */
-  .explain { margin-top: 14px; display: grid; gap: 10px; }
-  .ex { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 12px 14px;
-    animation: pop .25s ease; }
-  .ex b { color: var(--warn); }
-  .ex code { background: #fff; border: 1px solid #ffd8a8; border-radius: 4px; padding: 0 5px; font-size: 13px;
-    word-break: break-all; }
-  @keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-  /* 수칙 */
-  .rules { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px; }
-  .rules li { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .rules li:last-child { border-bottom: 0; }
-  .rules ol { margin: 0; padding-left: 20px; }
-
-  /* 퀴즈 */
-  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
-  .q .qt { font-weight: bold; margin-bottom: 10px; }
-  .q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
+.mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
+.fakebtn.flag.found { background: #a33a0a; }
+.q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
     border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 6px; cursor: pointer; }
-  .q button.opt:hover:not(:disabled) { border-color: var(--brand); }
-  .q button.opt.right { background: var(--ok-bg); border-color: var(--ok); }
-  .q button.opt.wrong { background: #fff5f5; border-color: #e03131; }
-  .q .fb { display: none; margin-top: 10px; font-size: 14px; color: var(--sub); }
-  .q.answered .fb { display: block; }
-
-  .done { display: none; margin-top: 20px; background: var(--ok-bg); border: 1px solid #b2f2bb; color: var(--ok);
-    border-radius: 12px; padding: 14px 18px; font-weight: bold; text-align: center; }
-  .done.show { display: block; }
 </style>
 </head>
 <body>
@@ -135,135 +77,66 @@
 </div>
 
 <script>
-  // warning.jsp(부모)와의 계약: edu-progress {done,total}, edu-complete. 개인정보는 주고받지 않는다.
-  var PARENT_TARGET_ORIGIN = '*';
-
-  var FLAGS = {
+window.EDU_ROUND = {
+  "flags": {
     "sender": "<b>사내 부서를 흉내 낸 외부 주소</b> — 표시 이름은 \"경영기획팀\"이지만 실제 주소의 @ 뒤가 회사 도메인이 아닙니다. 회사 이름을 섞은 비슷한 도메인은 공격자가 얼마든지 만들 수 있습니다.",
     "schedule": "<b>권위와 일정으로 압박</b> — \"경영전략회의\"처럼 윗선 행사를 내세우고 제출 기한까지 붙여, 의심하기보다 서둘러 처리하게 만듭니다.",
     "attach": "<b>있다던 첨부파일이 없음</b> — \"첨부된 회의자료\"라고 하지만 메일에는 첨부가 없습니다. 자료를 보려면 결국 아래 로그인 칸에 입력하도록 유도하는 장치입니다.",
     "login": "<b>열람하려면 로그인하라는 요구</b> — 정상적인 사내 자료는 평소 쓰는 그룹웨어·문서함에서 엽니다. 메일이 로그인을 요구하면 계정 탈취를 먼저 의심하세요.",
     "form": "<b>메일 안의 아이디·비밀번호 입력칸</b> — 가장 확실한 위험 신호입니다. 회사 시스템은 <b>메일 본문에서 비밀번호를 받지 않습니다</b>. 여기에 입력한 값은 그대로 공격자에게 전송됩니다.",
     "link": "<b>가짜 확인 버튼</b> — \"확인\" 버튼은 사내 시스템처럼 꾸민 가짜 주소로 연결됩니다. 주소에 회사 이름이 들어 있어도 실제 사내 시스템이라는 보장은 없습니다."
+  },
+  "order": [
+    "sender",
+    "schedule",
+    "attach",
+    "login",
+    "form",
+    "link"
+  ],
+  "quiz": [
+    {
+      "q": "사내 부서 이름으로 온 메일 본문에 아이디·비밀번호 입력칸이 있습니다. 어떻게 해야 할까요?",
+      "opts": [
+        "사내 메일이니 입력해도 된다",
+        "입력하지 않고 전산 담당자에게 신고한다",
+        "비밀번호만 일부 바꿔서 입력해 본다"
+      ],
+      "answer": 1,
+      "fb": "회사 시스템은 메일 본문에서 비밀번호를 받지 않습니다. 일부만 바꿔 입력해도 계정 정보가 노출됩니다."
+    },
+    {
+      "q": "\"첨부된 회의자료\"라는데 첨부파일은 없고 로그인하라는 안내만 있습니다. 가장 안전한 확인 방법은?",
+      "opts": [
+        "메일의 \"확인\" 버튼을 눌러 본다",
+        "메일에 답장을 보내 물어본다",
+        "평소 쓰는 그룹웨어에 직접 접속하거나 담당 부서에 메신저·전화로 확인한다"
+      ],
+      "answer": 2,
+      "fb": "메일 속 버튼과 답장은 모두 공격자에게 연결될 수 있습니다. 내가 아는 경로로 따로 확인하세요."
+    },
+    {
+      "q": "실수로 이 메일에 사내 계정과 비밀번호를 입력했습니다. 어떻게 해야 할까요?",
+      "opts": [
+        "아무 일 없었으니 그냥 넘어간다",
+        "즉시 비밀번호를 바꾸고 전산 담당자에게 신고한다",
+        "메일만 삭제한다"
+      ],
+      "answer": 1,
+      "fb": "빨리 알릴수록 계정 도용 피해를 막을 수 있습니다. 신고했다고 불이익은 없습니다."
+    }
+  ],
+  "hints": {
+    "sender": "보낸사람 주소",
+    "schedule": "회의 일시",
+    "attach": "첨부 자료 언급",
+    "login": "빨간 안내 문구",
+    "form": "입력칸",
+    "link": "파란 버튼"
+  }
 };
-  var FLAG_ORDER = ["sender","schedule","attach","login","form","link"];
-  var HINT_NAMES = {"sender":"보낸사람 주소","schedule":"회의 일시","attach":"첨부 자료 언급","login":"빨간 안내 문구","form":"입력칸","link":"파란 버튼"};
-
-  var QUIZ = [
-    {
-        "q": "사내 부서 이름으로 온 메일 본문에 아이디·비밀번호 입력칸이 있습니다. 어떻게 해야 할까요?",
-        "opts": [
-            "사내 메일이니 입력해도 된다",
-            "입력하지 않고 전산 담당자에게 신고한다",
-            "비밀번호만 일부 바꿔서 입력해 본다"
-        ],
-        "answer": 1,
-        "fb": "회사 시스템은 메일 본문에서 비밀번호를 받지 않습니다. 일부만 바꿔 입력해도 계정 정보가 노출됩니다."
-    },
-    {
-        "q": "\"첨부된 회의자료\"라는데 첨부파일은 없고 로그인하라는 안내만 있습니다. 가장 안전한 확인 방법은?",
-        "opts": [
-            "메일의 \"확인\" 버튼을 눌러 본다",
-            "메일에 답장을 보내 물어본다",
-            "평소 쓰는 그룹웨어에 직접 접속하거나 담당 부서에 메신저·전화로 확인한다"
-        ],
-        "answer": 2,
-        "fb": "메일 속 버튼과 답장은 모두 공격자에게 연결될 수 있습니다. 내가 아는 경로로 따로 확인하세요."
-    },
-    {
-        "q": "실수로 이 메일에 사내 계정과 비밀번호를 입력했습니다. 어떻게 해야 할까요?",
-        "opts": [
-            "아무 일 없었으니 그냥 넘어간다",
-            "즉시 비밀번호를 바꾸고 전산 담당자에게 신고한다",
-            "메일만 삭제한다"
-        ],
-        "answer": 1,
-        "fb": "빨리 알릴수록 계정 도용 피해를 막을 수 있습니다. 신고했다고 불이익은 없습니다."
-    }
-];
-
-  var found = {};
-  var quizDone = 0;
-  var TOTAL = FLAG_ORDER.length + QUIZ.length;
-
-  function post(data) {
-    try { if (window.parent && window.parent !== window) window.parent.postMessage(data, PARENT_TARGET_ORIGIN); } catch (e) {}
-  }
-  function report() {
-    var done = Object.keys(found).length + quizDone;
-    document.getElementById('flagCounter').textContent = Object.keys(found).length + ' / ' + FLAG_ORDER.length;
-    document.getElementById('quizCounter').textContent = quizDone + ' / ' + QUIZ.length;
-    post({ type: 'edu-progress', done: done, total: TOTAL });
-    if (done >= TOTAL) {
-      document.getElementById('doneBox').classList.add('show');
-      post({ type: 'edu-complete' });
-    }
-    reportHeight();
-  }
-
-  function reveal(key) {
-    if (found[key]) return;
-    found[key] = true;
-    document.querySelectorAll('[data-flag="' + key + '"]').forEach(function (el) { el.classList.add('found'); });
-    var div = document.createElement('div');
-    div.className = 'ex';
-    div.innerHTML = (FLAG_ORDER.indexOf(key) + 1) + '. ' + FLAGS[key];
-    document.getElementById('explain').appendChild(div);
-    report();
-  }
-
-  document.querySelectorAll('.flag').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.stopPropagation(); reveal(el.getAttribute('data-flag')); });
-  });
-
-  document.getElementById('hintBtn').addEventListener('click', function () {
-    var left = FLAG_ORDER.filter(function (k) { return !found[k]; });
-    document.getElementById('hintText').textContent = left.length ? '남은 곳: ' + left.map(function (k) { return HINT_NAMES[k]; }).join(', ') : '모두 찾았습니다!';
-    reportHeight();
-  });
-
-  var quizEl = document.getElementById('quiz');
-  QUIZ.forEach(function (item, qi) {
-    var box = document.createElement('div');
-    box.className = 'q';
-    var qt = document.createElement('div');
-    qt.className = 'qt';
-    qt.textContent = 'Q' + (qi + 1) + '. ' + item.q;
-    box.appendChild(qt);
-    var btns = item.opts.map(function (txt, oi) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'opt'; b.textContent = txt;
-      b.addEventListener('click', function () {
-        if (box.classList.contains('answered')) return;
-        if (oi === item.answer) {
-          btns.forEach(function (x) { x.disabled = true; });
-          b.classList.add('right');
-          box.classList.add('answered');
-          quizDone++;
-          report();
-        } else {
-          b.classList.add('wrong'); b.disabled = true;
-          reportHeight();
-        }
-      });
-      box.appendChild(b);
-      return b;
-    });
-    var fb = document.createElement('div');
-    fb.className = 'fb'; fb.textContent = item.fb;
-    box.appendChild(fb);
-    quizEl.appendChild(box);
-  });
-
-  report();
-
-  // 부모가 iframe 높이를 내용에 맞출 수 있도록 높이를 알려준다
-  function reportHeight() {
-    post({ type: 'edu-resize', height: document.documentElement.scrollHeight });
-  }
-  window.addEventListener('load', reportHeight);
-  if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
-  else setInterval(reportHeight, 1000);
 </script>
+<script src="../common/v1/edu-bridge.js"></script>
+<script src="../common/v1/edu-kit.js"></script>
 </body>
 </html>

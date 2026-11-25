@@ -4,88 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2026년 6차 악성메일 모의훈련 · 건강보험료 환급 사칭</title>
+<link rel="stylesheet" href="../common/v1/edu-kit.css">
 <style>
-  :root {
-    --bg: #f4f6f9; --card: #fff; --ink: #1b2d3d; --sub: #5c6872; --line: #e3e8ee;
-    --brand: #216da8; --warn: #d9480f; --warn-bg: #fff4e6; --ok: #2b8a3e; --ok-bg: #ebfbee;
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink);
-    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 15px; line-height: 1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
-  h1 { font-size: 20px; margin: 4px 0 4px; }
-  h2 { font-size: 18px; margin: 28px 0 8px; }
-  .lead { color: var(--sub); margin: 0 0 14px; }
-  .counter { display: inline-block; background: var(--brand); color: #fff; border-radius: 999px;
-    padding: 2px 12px; font-size: 13px; margin-left: 6px; vertical-align: middle; }
-
-  /* 메일 재현 */
-  .mail { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,.05); }
-  .mail-head { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .mail-head .row { display: flex; gap: 8px; padding: 3px 0; }
-  .mail-head .k { width: 64px; color: var(--sub); flex-shrink: 0; }
-  .mail-head .row > span:last-child { min-width: 0; word-break: break-all; }
-  .nhis-top { background: #005baa; color: #fff; padding: 16px 22px; }
-  .nhis-top .nm { font-size: 19px; font-weight: bold; }
-  .nhis-top .en { color: #a8cfee; font-size: 11px; }
-  .mail-body { padding: 22px; }
-  .mail-body p { margin: 0 0 12px; }
-  .rcpt { background: #f5f8fb; border-left: 4px solid #005baa; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; }
-  .amount { display: block; background: #005baa; color: #fff; text-align: center; border-radius: 8px; padding: 18px; margin: 16px 0; }
-  .amount .lbl { color: #a8cfee; font-size: 13px; }
-  .amount .val { font-size: 30px; font-weight: bold; }
-  .steps { display: block; background: #f9fbfd; border: 1px solid #d0d9e3; border-radius: 6px; padding: 12px 14px; margin: 14px 0; font-size: 14px; }
-  .steps div { padding: 2px 0; }
-  .safe { display: block; background: #f0f8ff; border: 1px dashed #005baa; border-radius: 6px; padding: 10px 14px; margin-top: 16px;
+h1 { font-size: 20px; margin: 4px 0 4px; }
+.mail-head .row > span:last-child { min-width: 0; word-break: break-all; }
+.nhis-top { background: #005baa; color: #fff; padding: 16px 22px; }
+.nhis-top .nm { font-size: 19px; font-weight: bold; }
+.nhis-top .en { color: #a8cfee; font-size: 11px; }
+.mail-body { padding: 22px; }
+.mail-body p { margin: 0 0 12px; }
+.rcpt { background: #f5f8fb; border-left: 4px solid #005baa; padding: 10px 14px; margin-bottom: 16px; font-size: 14px; }
+.amount { display: block; background: #005baa; color: #fff; text-align: center; border-radius: 8px; padding: 18px; margin: 16px 0; }
+.amount .lbl { color: #a8cfee; font-size: 13px; }
+.amount .val { font-size: 30px; font-weight: bold; }
+.steps { display: block; background: #f9fbfd; border: 1px solid #d0d9e3; border-radius: 6px; padding: 12px 14px; margin: 14px 0; font-size: 14px; }
+.steps div { padding: 2px 0; }
+.safe { display: block; background: #f0f8ff; border: 1px dashed #005baa; border-radius: 6px; padding: 10px 14px; margin-top: 16px;
     color: #005baa; font-size: 13px; text-align: center; }
-  .fakebtn { display: block; margin-top: 18px; background: #005baa; color: #fff; text-align: center;
+.fakebtn { display: block; margin-top: 18px; background: #005baa; color: #fff; text-align: center;
     padding: 14px; border-radius: 8px; font-weight: bold; }
-  .mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
-  .red { color: #c0392b; font-weight: bold; }
-
-  .flag { cursor: pointer; border-radius: 4px; outline: 2px dashed transparent; outline-offset: 2px;
-    transition: outline-color .15s, background .15s; }
-  .flag:hover { outline-color: #f59f00; }
-  .flag.found { outline: 2px solid var(--warn); background: rgba(253, 126, 20, .12); }
-  .fakebtn.flag.found, .amount.flag.found { background: #a33a0a; }
-  .badge { display: none; background: var(--warn); color: #fff; font-size: 11px; font-weight: bold;
-    border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: middle; }
-  .flag.found .badge { display: inline-block; }
-
-  .hint { font-size: 13px; color: var(--sub); margin-top: 10px; }
-  .hint button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: #fff;
-    border-radius: 6px; padding: 3px 10px; cursor: pointer; }
-
-  /* 해설 */
-  .explain { margin-top: 14px; display: grid; gap: 10px; }
-  .ex { background: var(--warn-bg); border-left: 4px solid var(--warn); border-radius: 8px; padding: 12px 14px;
-    animation: pop .25s ease; }
-  .ex b { color: var(--warn); }
-  .ex code { background: #fff; border: 1px solid #ffd8a8; border-radius: 4px; padding: 0 5px; font-size: 13px;
-    word-break: break-all; }
-  @keyframes pop { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-  /* 수칙 */
-  .rules { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px; }
-  .rules li { padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .rules li:last-child { border-bottom: 0; }
-  .rules ol { margin: 0; padding-left: 20px; }
-
-  /* 퀴즈 */
-  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
-  .q .qt { font-weight: bold; margin-bottom: 10px; }
-  .q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
+.mail-foot { padding: 16px 22px; border-top: 1px solid var(--line); color: #8a949d; font-size: 12px; }
+.red { color: #c0392b; font-weight: bold; }
+.fakebtn.flag.found, .amount.flag.found { background: #a33a0a; }
+.q button.opt { display: block; width: 100%; text-align: left; font: inherit; background: #fff;
     border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 6px; cursor: pointer; }
-  .q button.opt:hover:not(:disabled) { border-color: var(--brand); }
-  .q button.opt.right { background: var(--ok-bg); border-color: var(--ok); }
-  .q button.opt.wrong { background: #fff5f5; border-color: #e03131; }
-  .q .fb { display: none; margin-top: 10px; font-size: 14px; color: var(--sub); }
-  .q.answered .fb { display: block; }
-
-  .done { display: none; margin-top: 20px; background: var(--ok-bg); border: 1px solid #b2f2bb; color: var(--ok);
-    border-radius: 12px; padding: 14px 18px; font-weight: bold; text-align: center; }
-  .done.show { display: block; }
 </style>
 </head>
 <body>
@@ -142,114 +84,66 @@
 </div>
 
 <script>
-  // warning.jsp(부모)와의 계약: edu-progress {done,total}, edu-complete. 개인정보는 주고받지 않는다.
-  var PARENT_TARGET_ORIGIN = '*';
-
-  var FLAGS = {
-    sender: '<b>공식 도메인이 아닌 발신 주소</b> — 표시 이름은 "국민건강보험공단"이지만 실제 주소는 <code>nhis-return.kr</code>처럼 기관 이름을 흉내 낸 외부 도메인입니다. 공단의 공식 도메인은 <code>nhis.or.kr</code> 하나뿐이고, 표시 이름은 누구나 마음대로 바꿀 수 있습니다.',
-    bait: '<b>돈으로 유혹</b> — "183,600원을 돌려받을 수 있다"는 구체적인 금액으로 관심을 끕니다. 손해 볼 것 없다는 생각이 들게 해 경계심을 낮추는 전형적인 미끼입니다. 실제 환급 여부는 공식 홈페이지나 앱에서 직접 조회할 수 있습니다.',
-    deadline: '<b>마감 압박</b> — "기한 내 미신청 시 자동 소멸, 사후 청구 불가", "마감까지 43일" 같은 문구로 지금 안 하면 손해라는 조급함을 만듭니다. 실제 공단 환급금은 소멸시효(3년) 안에서 공식 경로로 청구할 수 있으며, 메일 링크로 신청을 재촉하지 않습니다.',
-    steps: '<b>개인정보·계좌 요구</b> — "본인인증 → 계좌 등록" 절차를 미리 보여 줘 자연스럽게 휴대폰 인증, 공동인증서, 계좌번호를 입력하게 만듭니다. 가짜 사이트에 이 정보를 넣으면 금융 사기에 그대로 악용됩니다.',
-    link: '<b>가짜 신청 사이트</b> — 버튼의 실제 연결 주소는 <code>https://nhis-return.kr/refund-apply</code>입니다. 공단 공식 주소가 아니라 이름만 비슷하게 만든 사이트로, 입력한 정보를 빼 가는 피싱 페이지입니다.',
-    safe: '<b>보안 안내로 위장한 안심시키기</b> — "공단은 비밀번호·OTP를 요구하지 않습니다" 같은 문구를 넣어 오히려 진짜처럼 보이게 합니다. 보안 안내 문구나 「법 조항」 인용이 있다고 안전한 메일이라는 뜻은 아닙니다.'
-  };
-  var FLAG_ORDER = ['sender', 'bait', 'deadline', 'steps', 'link', 'safe'];
-
-  var QUIZ = [
-    { q: '건강보험공단에서 "환급금 183,600원이 있다"는 메일이 왔습니다. 가장 안전한 확인 방법은?',
-      opts: ['메일의 "환급금 신청하기" 버튼을 눌러 조회한다', '직접 검색한 공식 홈페이지나 공식 앱에 접속해 조회한다', '메일에 답장해서 진짜인지 물어본다'],
-      answer: 1, fb: '메일 속 버튼은 가짜 사이트로 연결될 수 있습니다. 공식 홈페이지·앱으로 직접 들어가면 환급금이 있는지 안전하게 확인할 수 있습니다.' },
-    { q: '보낸사람 주소가 "nhis-return.kr"이었습니다. 어떻게 판단해야 할까요?',
-      opts: ['nhis가 들어 있으니 공단 주소가 맞다', '기관 이름을 흉내 낸 가짜 도메인일 가능성이 높다', '.kr로 끝나면 국내 기관이니 안전하다'],
-      answer: 1, fb: '공격자는 기관 이름에 단어를 덧붙인 비슷한 주소를 쉽게 만들 수 있습니다. 공식 도메인과 정확히 일치하는지 확인하세요.' },
-    { q: '링크를 눌러 휴대폰 본인인증과 계좌번호를 입력해 버렸습니다. 어떻게 해야 할까요?',
-      opts: ['환급금이 들어올 때까지 기다린다', '메일만 지운다', '즉시 은행에 알리고 전산 담당자에게 신고한다'],
-      answer: 2, fb: '빨리 알릴수록 금전 피해를 막을 수 있습니다. 신고했다고 불이익은 없습니다.' }
-  ];
-
-  var found = {};
-  var quizDone = 0;
-  var TOTAL = FLAG_ORDER.length + QUIZ.length;
-
-  function post(data) {
-    try { if (window.parent && window.parent !== window) window.parent.postMessage(data, PARENT_TARGET_ORIGIN); } catch (e) {}
-  }
-  function report() {
-    var done = Object.keys(found).length + quizDone;
-    document.getElementById('flagCounter').textContent = Object.keys(found).length + ' / ' + FLAG_ORDER.length;
-    document.getElementById('quizCounter').textContent = quizDone + ' / ' + QUIZ.length;
-    post({ type: 'edu-progress', done: done, total: TOTAL });
-    if (done >= TOTAL) {
-      document.getElementById('doneBox').classList.add('show');
-      post({ type: 'edu-complete' });
+window.EDU_ROUND = {
+  "flags": {
+    "sender": "<b>공식 도메인이 아닌 발신 주소</b> — 표시 이름은 \"국민건강보험공단\"이지만 실제 주소는 <code>nhis-return.kr</code>처럼 기관 이름을 흉내 낸 외부 도메인입니다. 공단의 공식 도메인은 <code>nhis.or.kr</code> 하나뿐이고, 표시 이름은 누구나 마음대로 바꿀 수 있습니다.",
+    "bait": "<b>돈으로 유혹</b> — \"183,600원을 돌려받을 수 있다\"는 구체적인 금액으로 관심을 끕니다. 손해 볼 것 없다는 생각이 들게 해 경계심을 낮추는 전형적인 미끼입니다. 실제 환급 여부는 공식 홈페이지나 앱에서 직접 조회할 수 있습니다.",
+    "deadline": "<b>마감 압박</b> — \"기한 내 미신청 시 자동 소멸, 사후 청구 불가\", \"마감까지 43일\" 같은 문구로 지금 안 하면 손해라는 조급함을 만듭니다. 실제 공단 환급금은 소멸시효(3년) 안에서 공식 경로로 청구할 수 있으며, 메일 링크로 신청을 재촉하지 않습니다.",
+    "steps": "<b>개인정보·계좌 요구</b> — \"본인인증 → 계좌 등록\" 절차를 미리 보여 줘 자연스럽게 휴대폰 인증, 공동인증서, 계좌번호를 입력하게 만듭니다. 가짜 사이트에 이 정보를 넣으면 금융 사기에 그대로 악용됩니다.",
+    "link": "<b>가짜 신청 사이트</b> — 버튼의 실제 연결 주소는 <code>https://nhis-return.kr/refund-apply</code>입니다. 공단 공식 주소가 아니라 이름만 비슷하게 만든 사이트로, 입력한 정보를 빼 가는 피싱 페이지입니다.",
+    "safe": "<b>보안 안내로 위장한 안심시키기</b> — \"공단은 비밀번호·OTP를 요구하지 않습니다\" 같은 문구를 넣어 오히려 진짜처럼 보이게 합니다. 보안 안내 문구나 「법 조항」 인용이 있다고 안전한 메일이라는 뜻은 아닙니다."
+  },
+  "order": [
+    "sender",
+    "bait",
+    "deadline",
+    "steps",
+    "link",
+    "safe"
+  ],
+  "quiz": [
+    {
+      "q": "건강보험공단에서 \"환급금 183,600원이 있다\"는 메일이 왔습니다. 가장 안전한 확인 방법은?",
+      "opts": [
+        "메일의 \"환급금 신청하기\" 버튼을 눌러 조회한다",
+        "직접 검색한 공식 홈페이지나 공식 앱에 접속해 조회한다",
+        "메일에 답장해서 진짜인지 물어본다"
+      ],
+      "answer": 1,
+      "fb": "메일 속 버튼은 가짜 사이트로 연결될 수 있습니다. 공식 홈페이지·앱으로 직접 들어가면 환급금이 있는지 안전하게 확인할 수 있습니다."
+    },
+    {
+      "q": "보낸사람 주소가 \"nhis-return.kr\"이었습니다. 어떻게 판단해야 할까요?",
+      "opts": [
+        "nhis가 들어 있으니 공단 주소가 맞다",
+        "기관 이름을 흉내 낸 가짜 도메인일 가능성이 높다",
+        ".kr로 끝나면 국내 기관이니 안전하다"
+      ],
+      "answer": 1,
+      "fb": "공격자는 기관 이름에 단어를 덧붙인 비슷한 주소를 쉽게 만들 수 있습니다. 공식 도메인과 정확히 일치하는지 확인하세요."
+    },
+    {
+      "q": "링크를 눌러 휴대폰 본인인증과 계좌번호를 입력해 버렸습니다. 어떻게 해야 할까요?",
+      "opts": [
+        "환급금이 들어올 때까지 기다린다",
+        "메일만 지운다",
+        "즉시 은행에 알리고 전산 담당자에게 신고한다"
+      ],
+      "answer": 2,
+      "fb": "빨리 알릴수록 금전 피해를 막을 수 있습니다. 신고했다고 불이익은 없습니다."
     }
-    reportHeight();
+  ],
+  "hints": {
+    "sender": "보낸사람 주소",
+    "bait": "파란 환급액 상자",
+    "deadline": "자동 소멸 문장",
+    "steps": "신청 절차 상자",
+    "link": "신청하기 버튼",
+    "safe": "맨 아래 보안 안내"
   }
-
-  function reveal(key) {
-    if (found[key]) return;
-    found[key] = true;
-    document.querySelectorAll('[data-flag="' + key + '"]').forEach(function (el) { el.classList.add('found'); });
-    var div = document.createElement('div');
-    div.className = 'ex';
-    div.innerHTML = (FLAG_ORDER.indexOf(key) + 1) + '. ' + FLAGS[key];
-    document.getElementById('explain').appendChild(div);
-    report();
-  }
-
-  document.querySelectorAll('.flag').forEach(function (el) {
-    el.addEventListener('click', function (e) { e.stopPropagation(); reveal(el.getAttribute('data-flag')); });
-  });
-
-  document.getElementById('hintBtn').addEventListener('click', function () {
-    var left = FLAG_ORDER.filter(function (k) { return !found[k]; });
-    var names = { sender: '보낸사람 주소', bait: '파란 환급액 상자', deadline: '자동 소멸 문장', steps: '신청 절차 상자', link: '신청하기 버튼', safe: '맨 아래 보안 안내' };
-    document.getElementById('hintText').textContent = left.length ? '남은 곳: ' + left.map(function (k) { return names[k]; }).join(', ') : '모두 찾았습니다!';
-    reportHeight();
-  });
-
-  var quizEl = document.getElementById('quiz');
-  QUIZ.forEach(function (item, qi) {
-    var box = document.createElement('div');
-    box.className = 'q';
-    var qt = document.createElement('div');
-    qt.className = 'qt';
-    qt.textContent = 'Q' + (qi + 1) + '. ' + item.q;
-    box.appendChild(qt);
-    var btns = item.opts.map(function (txt, oi) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'opt'; b.textContent = txt;
-      b.addEventListener('click', function () {
-        if (box.classList.contains('answered')) return;
-        if (oi === item.answer) {
-          btns.forEach(function (x) { x.disabled = true; });
-          b.classList.add('right');
-          box.classList.add('answered');
-          quizDone++;
-          report();
-        } else {
-          b.classList.add('wrong'); b.disabled = true;
-          reportHeight();
-        }
-      });
-      box.appendChild(b);
-      return b;
-    });
-    var fb = document.createElement('div');
-    fb.className = 'fb'; fb.textContent = item.fb;
-    box.appendChild(fb);
-    quizEl.appendChild(box);
-  });
-
-  report();
-
-  // 부모가 iframe 높이를 내용에 맞출 수 있도록 높이를 알려준다
-  function reportHeight() {
-    post({ type: 'edu-resize', height: document.documentElement.scrollHeight });
-  }
-  window.addEventListener('load', reportHeight);
-  if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.body);
-  else setInterval(reportHeight, 1000);
+};
 </script>
+<script src="../common/v1/edu-bridge.js"></script>
+<script src="../common/v1/edu-kit.js"></script>
 </body>
 </html>
